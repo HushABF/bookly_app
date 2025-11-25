@@ -17,10 +17,13 @@ class FeaturedListView extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.3,
 
             child: ListView.builder(
-              itemCount: 5,
+              physics: BouncingScrollPhysics(),
+              itemCount: state.books.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return const CustomBookImage();
+                return CustomBookImage(
+                  imageUrl: state.books[index].volumeInfo.imageLinks.thumbnail,
+                );
               },
             ),
           );
