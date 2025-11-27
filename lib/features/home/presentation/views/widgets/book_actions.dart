@@ -1,9 +1,13 @@
+import 'package:bookly_app/core/utils/functions/custom_url.dart';
 import 'package:bookly_app/core/widgets/custom_buttom.dart';
+import 'package:bookly_app/features/home/data/models/book_model/book_model.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BooksAction extends StatelessWidget {
-  const BooksAction({super.key});
+  const BooksAction({super.key, required this.book});
 
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,6 +23,7 @@ class BooksAction extends StatelessWidget {
                 topLeft: Radius.circular(16),
               ),
               text: '19.99\$',
+              onPressed: () {},
             ),
           ),
           Expanded(
@@ -30,6 +35,9 @@ class BooksAction extends StatelessWidget {
                 topRight: Radius.circular(16),
               ),
               text: 'Free Preview',
+              onPressed: ()  {
+                launchCustomUrl(context, book.volumeInfo.previewLink!);
+              },
             ),
           ),
         ],
