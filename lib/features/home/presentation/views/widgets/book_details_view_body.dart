@@ -1,11 +1,6 @@
-import 'package:bookly_app/core/utils/styles.dart';
-import 'package:bookly_app/features/home/presentation/views/widgets/book_actions.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/books_details_section.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/similar_books_section.dart';
-import 'package:bookly_app/features/home/presentation/views/widgets/similiar_book_list_view.dart';
-import 'package:bookly_app/features/home/presentation/views/widgets/book_rating.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/custom_book_details_app_bar.dart';
-import 'package:bookly_app/features/home/presentation/views/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 
 class BookDetailsViewBody extends StatelessWidget {
@@ -23,7 +18,7 @@ class BookDetailsViewBody extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CustomBooksDetailsAppBar(),
-                BooksDetailsSection(),
+                const BooksDetailsSection(),
 
                 Expanded(child: const SizedBox(height: 48)),
                 SimilarBooksSection(),
