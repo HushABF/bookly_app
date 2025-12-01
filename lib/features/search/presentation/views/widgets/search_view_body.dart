@@ -19,9 +19,21 @@ class SearchViewBody extends StatelessWidget {
 
           CustomSearchTextField(
             onSubmitted: (value) {
-              BlocProvider.of<SearchBooksCubit>(
-                context,
-              ).fetchSearchBooks(searchText: value);
+              if (value != '') {
+                BlocProvider.of<SearchBooksCubit>(
+                  context,
+                ).fetchSearchBooks(searchText: value);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Empty Search, type something to search',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             },
           ),
           SizedBox(height: 36),
