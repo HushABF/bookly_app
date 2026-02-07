@@ -9,8 +9,8 @@ abstract class Failure {
 class ServerFailure extends Failure {
   ServerFailure(super.errorMessage);
 
-  factory ServerFailure.fromDioError(DioException dioExcpetion) {
-    switch (dioExcpetion.type) {
+  factory ServerFailure.fromDioError(DioException dioException) {
+    switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
         return ServerFailure('Connection timeout with Api Server');
       case DioExceptionType.sendTimeout:
@@ -24,8 +24,8 @@ class ServerFailure extends Failure {
 
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-          dioExcpetion.response!.statusCode!,
-          dioExcpetion.response,
+          dioException.response!.statusCode!,
+          dioException.response,
         );
       case DioExceptionType.cancel:
         return ServerFailure('Cancel error');
@@ -34,21 +34,23 @@ class ServerFailure extends Failure {
         return ServerFailure('Connection error with Api Server');
 
       case DioExceptionType.unknown:
-        if (dioExcpetion.message!.contains('SocketException')) {
+        if (dioException.message!.contains('SocketException')) {
           return ServerFailure('No Internet connection');
         }
-        return ServerFailure('Unkown error try again');
+        return ServerFailure('Unknown error, please try again');
       default:
-        return ServerFailure('OOps');
+        return ServerFailure('An unexpected error occurred');
     }
   }
 
-  factory ServerFailure.fromResponse(int statudCode, dynamic response) {
-    if (statudCode == 400 || statudCode == 401 || statudCode == 403) {
+  factory ServerFailure.fromResponse(int statusCode, dynamic response) {
+    if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(response['error']['message']);
-    } else if (statudCode == 404) {
+    } else if (statusCode == 404) {
       return ServerFailure('your request not found');
-    } else if (statudCode == 500) {
+    } else if (statusCode == 429) {
+      return ServerFailure('Too many requests. Please try again later.');
+    } else if (statusCode == 500) {
       return ServerFailure('Internal server error, try later');
     } else {
       return ServerFailure('Error , try again');

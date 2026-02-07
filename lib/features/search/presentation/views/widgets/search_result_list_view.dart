@@ -16,7 +16,6 @@ class SearchResultListView extends StatelessWidget {
         if (state is SearchBooksSuccess) {
           return Expanded(
             child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: state.books.length,
               itemBuilder: (context, index) {

@@ -52,7 +52,7 @@ class BookListViewItem extends StatelessWidget {
                       child: Text(
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        book.volumeInfo.title!,
+                        book.volumeInfo.title ?? 'Unknown Title',
                         style: Styles.textStyle20,
                       ),
                     ),
@@ -62,9 +62,10 @@ class BookListViewItem extends StatelessWidget {
                       book.volumeInfo.authors == null ||
                               book.volumeInfo.authors!.isEmpty
                           ? 'Unknown Author' // Provide a default value
-                          : book
-                                .volumeInfo
-                                .authors![0], // Access the first author
+                          : book.volumeInfo.authors![0]
+                                .split(' ')
+                                .take(2)
+                                .join(' '), // Access the first author
                     ),
                     const SizedBox(height: 3),
 

@@ -1,3 +1,4 @@
+import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/errors/failures.dart';
 import 'package:bookly_app/core/utils/api_service.dart';
 import 'package:bookly_app/core/models/book_model/book_model.dart';
@@ -13,8 +14,11 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<BookModel>>> fetchNewestBooks() async {
     try {
       var data = await apiService.get(
-        endPoint: 'volumes?Filtering=free-ebooks&Sorting=newest&q=computer science',
+        endPoint: 'volumes?Filtering=free-ebooks&Sorting=newest&q=computer science&key=$kGoogleBooksApiKey',
       );
+      if (data['items'] == null || (data['items'] as List).isEmpty) {
+        return left(ServerFailure('No books found'));
+      }
       List<BookModel> books = [];
       for (var item in data['items']) {
         books.add(BookModel.fromJson(item));
@@ -32,8 +36,11 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<BookModel>>> fetchFeaturedBook() async {
     try {
       var data = await apiService.get(
-        endPoint: 'volumes?Filtering=free-ebooks&q=programming',
+        endPoint: 'volumes?Filtering=free-ebooks&q=programming&key=$kGoogleBooksApiKey',
       );
+      if (data['items'] == null || (data['items'] as List).isEmpty) {
+        return left(ServerFailure('No books found'));
+      }
       List<BookModel> books = [];
       for (var item in data['items']) {
         books.add(BookModel.fromJson(item));
@@ -51,8 +58,11 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<BookModel>>> fetchSimilarBooks({required String category}) async {
     try {
       var data = await apiService.get(
-        endPoint: 'volumes?Filtering=free-ebooks&Sorting=relevance&q=programming',
+        endPoint: 'volumes?Filtering=free-ebooks&Sorting=relevance&q=$category&key=$kGoogleBooksApiKey',
       );
+      if (data['items'] == null || (data['items'] as List).isEmpty) {
+        return left(ServerFailure('No books found'));
+      }
       List<BookModel> books = [];
       for (var item in data['items']) {
         books.add(BookModel.fromJson(item));

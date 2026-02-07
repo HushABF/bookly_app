@@ -15,11 +15,16 @@ final class SearchBooksSuccess extends SearchBooksState {
   final List<BookModel> books;
 
   const SearchBooksSuccess(this.books);
+
+  @override
+  List<Object> get props => [books];
 }
 
 final class SearchBooksFailure extends SearchBooksState {
   final String errorMessage;
 
   const SearchBooksFailure(this.errorMessage);
-  
+
+  @override
+  List<Object> get props => [errorMessage];
 }

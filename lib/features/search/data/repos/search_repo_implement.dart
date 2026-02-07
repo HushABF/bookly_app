@@ -1,3 +1,4 @@
+import 'package:bookly_app/constants.dart';
 import 'package:bookly_app/core/errors/failures.dart';
 import 'package:bookly_app/core/models/book_model/book_model.dart';
 import 'package:bookly_app/core/utils/api_service.dart';
@@ -13,8 +14,11 @@ class SearchRepoImpl extends SearchRepo {
   Future<Either<Failure, List<BookModel>>> fetchSearchResult({required String searchText}) async {
     try {
       var data = await apiService.get(
-        endPoint: 'volumes?Filtering=free-ebooks&q=$searchText',
+        endPoint: 'volumes?Filtering=free-ebooks&q=$searchText&key=$kGoogleBooksApiKey',
       );
+      if (data['items'] == null || (data['items'] as List).isEmpty) {
+        return left(ServerFailure('No books found'));
+      }
       List<BookModel> books = [];
       for (var item in data['items']) {
         books.add(BookModel.fromJson(item));

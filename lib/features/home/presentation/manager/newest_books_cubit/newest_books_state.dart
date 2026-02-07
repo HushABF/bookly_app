@@ -16,11 +16,15 @@ final class NewestBooksSuccess extends NewestBooksState {
 
   const NewestBooksSuccess(this.books);
 
-
+  @override
+  List<Object> get props => [books];
 }
 
 final class NewestBooksFailure extends NewestBooksState {
   final String errorMessage;
 
   const NewestBooksFailure(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
 }

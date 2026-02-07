@@ -35,9 +35,11 @@ class BooksAction extends StatelessWidget {
                 topRight: Radius.circular(16),
               ),
               text: 'Free Preview',
-              onPressed: ()  {
-                launchCustomUrl(context, book.volumeInfo.previewLink!);
-              },
+              onPressed: book.volumeInfo.previewLink != null
+                  ? () {
+                      launchCustomUrl(context, book.volumeInfo.previewLink!);
+                    }
+                  : null,
             ),
           ),
         ],

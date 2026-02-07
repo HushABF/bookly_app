@@ -16,7 +16,7 @@ class SearchViewBody extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 12),
-
+    
           CustomSearchTextField(
             onSubmitted: (value) {
               if (value != '') {
@@ -42,7 +42,7 @@ class SearchViewBody extends StatelessWidget {
             child: Text('Results:', style: Styles.textStyle18),
           ),
           SizedBox(height: 24),
-
+    
           SearchResultListView(),
         ],
       ),
